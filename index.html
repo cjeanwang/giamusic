@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musical Aptitude Assessment</title>
+    <title>Musical Aptitude Assessment - Educational Demonstration</title>
     <style>
         /* ==================================
            RESET & BASE STYLES
@@ -28,7 +28,7 @@
            CONTAINER & CARD STYLES
            ================================== */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: white;
             border-radius: 20px;
@@ -66,8 +66,17 @@
             opacity: 0.95;
         }
 
+        .header .subtitle {
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.85;
+        }
+
         .content {
             padding: 40px;
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
         /* ==================================
@@ -85,6 +94,56 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* ==================================
+           WARNING/CAVEAT BOXES
+           ================================== */
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-box ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .warning-box li {
+            margin: 8px 0;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        .info-box p, .info-box ul {
+            color: #0c5460;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
         }
 
         /* ==================================
@@ -117,6 +176,13 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
+        .grade-helper {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
         /* ==================================
            BUTTON STYLES
            ================================== */
@@ -138,12 +204,19 @@
             width: 100%;
         }
 
-        .btn-primary:hover {
+        .btn-secondary {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #333;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .btn-primary:active {
+        .btn-primary:active, .btn-secondary:active {
             transform: translateY(0);
         }
 
@@ -175,6 +248,22 @@
             transform: none !important;
         }
 
+        .btn-link {
+            background: none;
+            color: #667eea;
+            text-decoration: underline;
+            padding: 10px;
+            font-size: 1em;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .btn-link:hover {
+            color: #764ba2;
+            transform: none;
+            box-shadow: none;
+        }
+
         /* ==================================
            TEST DISPLAY
            ================================== */
@@ -189,6 +278,17 @@
         .test-info h2 {
             color: #333;
             margin-bottom: 10px;
+        }
+
+        .test-level-badge {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 10px;
         }
 
         .progress-container {
@@ -328,6 +428,90 @@
         }
 
         /* ==================================
+           METHODOLOGY PAGE STYLES
+           ================================== */
+        .methodology-content {
+            text-align: left;
+        }
+
+        .methodology-content h2 {
+            color: #667eea;
+            margin: 30px 0 15px 0;
+            font-size: 1.8em;
+        }
+
+        .methodology-content h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .methodology-content h4 {
+            color: #333;
+            margin: 15px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .methodology-content p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .methodology-content ul, .methodology-content ol {
+            margin: 10px 0 10px 30px;
+            line-height: 1.8;
+        }
+
+        .methodology-content li {
+            margin: 5px 0;
+        }
+
+        .test-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .test-comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .test-comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .test-comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .reference-list {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .reference-list li {
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .highlight-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        /* ==================================
            RESPONSIVE DESIGN
            ================================== */
         @media (max-width: 600px) {
@@ -337,6 +521,7 @@
 
             .content {
                 padding: 20px;
+                max-height: 65vh;
             }
 
             .btn-same, .btn-different {
@@ -346,6 +531,10 @@
 
             .score-number {
                 font-size: 3em;
+            }
+
+            .test-comparison-table {
+                font-size: 0.9em;
             }
         }
 
@@ -363,13 +552,21 @@
         .mb-20 {
             margin-bottom: 20px;
         }
+
+        .back-to-top {
+            position: sticky;
+            bottom: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🎵 Musical Aptitude Assessment 🎵</h1>
-            <p>Based on Gordon's Musical Aptitude Tests</p>
+            <p>Educational Demonstration Based on Gordon's Framework</p>
+            <p class="subtitle">For Official Assessment, Please Use GIA Publications' Tests</p>
         </div>
 
         <div class="content">
@@ -378,10 +575,31 @@
                  ================================== -->
             <div id="intro-section" class="section active">
                 <h2 class="mb-20">Welcome!</h2>
+                
+                <div class="warning-box">
+                    <h3>⚠️ Important Disclaimer</h3>
+                    <p><strong>This is an EDUCATIONAL DEMONSTRATION only and should NOT be used for actual diagnostic or placement purposes.</strong></p>
+                    <ul>
+                        <li>This simplified version lacks the validated items and standardized norms of official Gordon tests</li>
+                        <li>Results are approximations and may not accurately reflect true musical aptitude</li>
+                        <li>For legitimate assessment, use official tests from <strong>GIA Publications</strong></li>
+                        <li>Official tests: <a href="https://giamusicassessment.com/" target="_blank" style="color: #856404; text-decoration: underline;">giamusicassessment.com</a></li>
+                    </ul>
+                </div>
+
                 <p class="mb-20">
-                    This test measures your natural musical aptitude through tonal and rhythmic pattern recognition. 
-                    You'll listen to pairs of musical patterns and determine if they are the same or different.
+                    This demonstration measures pattern recognition abilities through tonal and rhythmic discrimination tasks, 
+                    following the structure of Edwin E. Gordon's Musical Aptitude Tests.
                 </p>
+
+                <div class="info-box">
+                    <h3>📚 Test Levels</h3>
+                    <ul>
+                        <li><strong>PMMA</strong> (Primary Measures): Grades K–3 (Ages 5-9)</li>
+                        <li><strong>IMMA</strong> (Intermediate Measures): Grades 1–6 (Ages 6-12)</li>
+                        <li><strong>AMMA</strong> (Advanced Measures): Grades 7–College (Ages 13+)</li>
+                    </ul>
+                </div>
                 
                 <div class="form-group">
                     <label for="participant-name">Name (Optional):</label>
@@ -389,8 +607,25 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="participant-age">Age:</label>
-                    <input type="number" id="participant-age" min="5" max="100" placeholder="Enter your age" required>
+                    <label for="participant-grade">Current Grade Level:</label>
+                    <select id="participant-grade" required>
+                        <option value="">-- Select Grade --</option>
+                        <option value="K">Kindergarten (Age 5-6)</option>
+                        <option value="1">Grade 1 (Age 6-7)</option>
+                        <option value="2">Grade 2 (Age 7-8)</option>
+                        <option value="3">Grade 3 (Age 8-9)</option>
+                        <option value="4">Grade 4 (Age 9-10)</option>
+                        <option value="5">Grade 5 (Age 10-11)</option>
+                        <option value="6">Grade 6 (Age 11-12)</option>
+                        <option value="7">Grade 7 (Age 12-13)</option>
+                        <option value="8">Grade 8 (Age 13-14)</option>
+                        <option value="9">Grade 9 (Age 14-15)</option>
+                        <option value="10">Grade 10 (Age 15-16)</option>
+                        <option value="11">Grade 11 (Age 16-17)</option>
+                        <option value="12">Grade 12 (Age 17-18)</option>
+                        <option value="college">College/Adult (18+)</option>
+                    </select>
+                    <div class="grade-helper" id="grade-helper"></div>
                 </div>
 
                 <div class="instruction">
@@ -401,10 +636,268 @@
                         <li>Listen carefully to each pair of patterns</li>
                         <li>Decide if they sound the same or different</li>
                         <li>Trust your first instinct</li>
+                        <li>The test takes approximately 10-15 minutes</li>
                     </ul>
                 </div>
 
                 <button class="btn btn-primary" onclick="startTest()">Begin Test</button>
+                <button class="btn btn-secondary" onclick="showMethodology()">Learn About the Assessment</button>
+            </div>
+
+            <!-- ==================================
+                 METHODOLOGY SECTION
+                 ================================== -->
+            <div id="methodology-section" class="section">
+                <div class="methodology-content">
+                    <h2>Assessment Methodology & Scoring</h2>
+                    
+                    <div class="warning-box">
+                        <h3>⚠️ Critical Limitations</h3>
+                        <p>This web-based demonstration is a simplified educational tool. It does NOT replace official Gordon tests because:</p>
+                        <ul>
+                            <li><strong>No Validated Items:</strong> Official tests use extensively piloted and validated musical patterns</li>
+                            <li><strong>No Standardized Norms:</strong> Lacks norm tables from thousands of test administrations</li>
+                            <li><strong>Simplified Scoring:</strong> Uses approximated percentile conversion, not actual normed data</li>
+                            <li><strong>Uncontrolled Environment:</strong> Audio quality, distractions, and testing conditions vary</li>
+                            <li><strong>No Professional Interpretation:</strong> Official results should be interpreted by trained music educators</li>
+                        </ul>
+                    </div>
+
+                    <h2>Gordon's Musical Aptitude Framework</h2>
+                    
+                    <h3>What is Audiation?</h3>
+                    <p>Edwin E. Gordon (1927-2015) defined <strong>audiation</strong> as "hearing and comprehending music for which the sound is no longer or may never have been physically present" (Gordon, 1999). This is the foundation of musical thinking.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Key Principle:</strong> Musical aptitude is distinct from musical achievement. Aptitude measures potential to learn music, while achievement measures what has been learned.</p>
+                    </div>
+
+                    <h3>The Three Test Levels</h3>
+                    
+                    <table class="test-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Target Population</th>
+                                <th>Published</th>
+                                <th>Format</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>PMMA</strong><br>Primary Measures of Music Audiation</td>
+                                <td>Grades K–3<br>(Ages 5-9)</td>
+                                <td>1979</td>
+                                <td>Tonal: 40 items<br>Rhythm: 40 items</td>
+                                <td>~30 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IMMA</strong><br>Intermediate Measures of Music Audiation</td>
+                                <td>Grades 1–6<br>(Ages 6-12)</td>
+                                <td>1982</td>
+                                <td>Tonal: 40 items<br>Rhythm: 40 items</td>
+                                <td>~30 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AMMA</strong><br>Advanced Measures of Music Audiation</td>
+                                <td>Grades 7–College<br>(Ages 13+)</td>
+                                <td>1989, rev. 1998</td>
+                                <td>Combined: 30 items</td>
+                                <td>~15 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Developmental vs. Stabilized Aptitude</h3>
+                    
+                    <h4>Developmental Aptitude (Birth to ~Age 9):</h4>
+                    <ul>
+                        <li>Highly influenced by musical environment</li>
+                        <li>Can be enhanced through informal music guidance</li>
+                        <li>Measured by PMMA (and early IMMA)</li>
+                        <li>Critical period for aptitude development</li>
+                    </ul>
+
+                    <h4>Stabilized Aptitude (Age 9+):</h4>
+                    <ul>
+                        <li>Relatively stable throughout life</li>
+                        <li>Less influenced by environment</li>
+                        <li>Measured by IMMA (later grades) and AMMA</li>
+                        <li>Reflects developmental musical experiences</li>
+                    </ul>
+
+                    <h2>Scoring Methodology</h2>
+
+                    <h3>1. Raw Score Calculation</h3>
+                    <p>In this demonstration:</p>
+                    <div class="highlight-box">
+                        <p><strong>Raw Score = (Number Correct ÷ Total Questions) × 100</strong></p>
+                        <p>Calculated separately for Tonal and Rhythm subtests</p>
+                    </div>
+
+                    <h3>2. Percentile Conversion (SIMPLIFIED)</h3>
+                    <p>This demonstration uses a simplified percentile approximation:</p>
+                    
+                    <table class="test-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Raw Score Range</th>
+                                <th>Approximate Percentile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>95-100%</td><td>99th</td></tr>
+                            <tr><td>90-94%</td><td>95th</td></tr>
+                            <tr><td>85-89%</td><td>90th</td></tr>
+                            <tr><td>80-84%</td><td>84th</td></tr>
+                            <tr><td>75-79%</td><td>75th</td></tr>
+                            <tr><td>70-74%</td><td>63rd</td></tr>
+                            <tr><td>65-69%</td><td>50th</td></tr>
+                            <tr><td>60-64%</td><td>37th</td></tr>
+                            <tr><td>55-59%</td><td>25th</td></tr>
+                            <tr><td>50-54%</td><td>16th</td></tr>
+                            <tr><td>Below 50%</td><td>Below 16th</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warning-box">
+                        <h3>Why This is Oversimplified:</h3>
+                        <ul>
+                            <li>Official Gordon tests use extensive norm tables derived from thousands of students</li>
+                            <li>Norms are specific to exact age in months, not just grade level</li>
+                            <li>Different norms exist for fall vs. spring test administration</li>
+                            <li>Separate norms for each test form and version</li>
+                            <li>Percentiles vary by demographic factors</li>
+                        </ul>
+                    </div>
+
+                    <h3>3. Official Gordon Scoring Includes:</h3>
+                    <ul>
+                        <li><strong>Raw Scores:</strong> Total correct answers</li>
+                        <li><strong>Percentile Ranks:</strong> Comparison to norm group (0-99)</li>
+                        <li><strong>Standard Scores:</strong> Mean = 50, SD = 10</li>
+                        <li><strong>Stanines:</strong> 9-point scale (1-9, Mean = 5)</li>
+                        <li><strong>Confidence Intervals:</strong> Statistical range of true score</li>
+                    </ul>
+
+                    <h3>Interpretation Categories</h3>
+                    
+                    <table class="test-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Percentile Range</th>
+                                <th>Category</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>90-99</td>
+                                <td>Superior</td>
+                                <td>Exceptional musical aptitude; strong potential for advanced musical learning</td>
+                            </tr>
+                            <tr>
+                                <td>75-89</td>
+                                <td>Above Average</td>
+                                <td>Strong musical aptitude; good potential for musical development</td>
+                            </tr>
+                            <tr>
+                                <td>25-74</td>
+                                <td>Average</td>
+                                <td>Typical musical aptitude; normal capacity for musical learning</td>
+                            </tr>
+                            <tr>
+                                <td>10-24</td>
+                                <td>Below Average</td>
+                                <td>May find some music tasks challenging; can benefit from structured instruction</td>
+                            </tr>
+                            <tr>
+                                <td>1-9</td>
+                                <td>Low</td>
+                                <td>May need additional support; musical skills can still be developed with instruction</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Reliability and Validity</h2>
+
+                    <h3>Official Gordon Test Reliability (from published manuals):</h3>
+                    <ul>
+                        <li><strong>PMMA:</strong> Internal consistency .83-.88 (Gordon, 1979)</li>
+                        <li><strong>IMMA:</strong> Internal consistency .85-.89 (Gordon, 1982)</li>
+                        <li><strong>AMMA:</strong> Test-retest reliability .85-.89 (Gordon, 1989)</li>
+                    </ul>
+
+                    <h3>Validity Evidence:</h3>
+                    <ul>
+                        <li><strong>Content Validity:</strong> Items designed based on music learning theory</li>
+                        <li><strong>Predictive Validity:</strong> Correlates .40-.70 with music achievement</li>
+                        <li><strong>Construct Validity:</strong> Factor analysis supports tonal/rhythm distinction</li>
+                    </ul>
+
+                    <h2>Norming Studies</h2>
+                    <p>Official Gordon tests were normed on large, diverse samples:</p>
+                    <ul>
+                        <li><strong>PMMA:</strong> 7,384 students (Gordon, 1979)</li>
+                        <li><strong>IMMA:</strong> 8,901 students (Gordon, 1982)</li>
+                        <li><strong>AMMA:</strong> 5,824+ participants (Gordon, 1989, revised 1998)</li>
+                    </ul>
+                    <p>Samples included diverse geographic, socioeconomic, and demographic characteristics.</p>
+
+                    <h2>Ethical Use Guidelines</h2>
+
+                    <div class="info-box">
+                        <h3>Gordon's Professional Standards:</h3>
+                        <ul>
+                            <li><strong>Never use for exclusion:</strong> All students benefit from music education regardless of aptitude</li>
+                            <li><strong>Individualize instruction:</strong> Use scores to adapt teaching, not to limit opportunities</li>
+                            <li><strong>Maintain confidentiality:</strong> Scores are private educational information</li>
+                            <li><strong>Consider context:</strong> Single test scores may not reflect true ability</li>
+                            <li><strong>Professional interpretation:</strong> Results should be explained by trained educators</li>
+                        </ul>
+                    </div>
+
+                    <h2>Key References</h2>
+                    
+                    <div class="reference-list">
+                        <ol>
+                            <li>Gordon, E. E. (1979). <em>Primary Measures of Music Audiation.</em> Chicago: GIA Publications.</li>
+                            <li>Gordon, E. E. (1982). <em>Intermediate Measures of Music Audiation.</em> Chicago: GIA Publications.</li>
+                            <li>Gordon, E. E. (1989, revised 1998). <em>Advanced Measures of Music Audiation.</em> Chicago: GIA Publications.</li>
+                            <li>Gordon, E. E. (1999). <em>All about audiation and music aptitudes.</em> Music Educators Journal, 86(2), 41-44.</li>
+                            <li>Gordon, E. E. (2013). <em>Music Learning Theory for Newborn and Young Children</em> (2013 edition). Chicago: GIA Publications.</li>
+                            <li>Walters, D. L. (1991). Edwin Gordon's music learning theory: A research perspective. <em>The Quarterly Journal of Music Teaching and Learning, 2</em>(4), 9-19.</li>
+                        </ol>
+                    </div>
+
+                    <h2>Obtaining Official Tests</h2>
+                    
+                    <div class="info-box">
+                        <h3>GIA Publications, Inc.</h3>
+                        <p><strong>Website:</strong> <a href="https://giamusicassessment.com/" target="_blank">giamusicassessment.com</a></p>
+                        <p><strong>Address:</strong> 7404 S. Mason Ave., Chicago, IL 60638</p>
+                        <p><strong>Phone:</strong> 800-GIA-1358</p>
+                        <p><strong>Requirements:</strong></p>
+                        <ul>
+                            <li>Tests must be purchased (not freely available)</li>
+                            <li>Some require professional qualification to administer</li>
+                            <li>Scoring services available</li>
+                            <li>Training resources available for educators</li>
+                        </ul>
+                    </div>
+
+                    <h2>Additional Resources</h2>
+                    <ul>
+                        <li><strong>Gordon Institute for Music Learning:</strong> <a href="https://giml.org" target="_blank">giml.org</a></li>
+                        <li><strong>GIA Music Assessment:</strong> <a href="https://giamusicassessment.com/" target="_blank">giamusicassessment.com</a></li>
+                        <li><strong>Research Database:</strong> Search "Edwin Gordon musical aptitude" in JSTOR, ERIC, or Google Scholar</li>
+                    </ul>
+
+                    <div class="back-to-top">
+                        <button class="btn btn-primary" onclick="showIntro()">Back to Test</button>
+                    </div>
+                </div>
             </div>
 
             <!-- ==================================
@@ -414,6 +907,7 @@
                 <div class="test-info">
                     <h2 id="test-phase-title">Tonal Section</h2>
                     <p id="test-phase-description">Listen to the melodic patterns</p>
+                    <div class="test-level-badge" id="test-level-badge">Loading...</div>
                 </div>
 
                 <div class="progress-container">
@@ -459,10 +953,16 @@
                 <div class="results-container">
                     <h2 class="mb-20">Your Results</h2>
                     
+                    <div class="warning-box">
+                        <h3>⚠️ Remember: Educational Demonstration Only</h3>
+                        <p>These results are approximations based on a simplified test format. They do not represent validated, normed scores from official Gordon tests. For accurate assessment of musical aptitude, consult a music educator and use official GIA Publications tests.</p>
+                    </div>
+                    
                     <div class="score-display">
                         <h3>Overall Score</h3>
                         <div class="score-number" id="total-score">--</div>
                         <div class="percentile" id="percentile-rank">--</div>
+                        <div class="test-level-badge" id="results-level-badge">--</div>
                     </div>
 
                     <div class="category-score">
@@ -482,7 +982,19 @@
                         <p id="interpretation-text">--</p>
                     </div>
 
+                    <div class="info-box">
+                        <h3>What This Means</h3>
+                        <p>These scores reflect your ability to discriminate between similar musical patterns in this demonstration. Remember:</p>
+                        <ul>
+                            <li>Musical aptitude is just one aspect of musical potential</li>
+                            <li>All people can learn and enjoy music with appropriate instruction</li>
+                            <li>Scores should never be used to exclude anyone from music education</li>
+                            <li>Musical achievement (what you've learned) is separate from aptitude (learning potential)</li>
+                        </ul>
+                    </div>
+
                     <button class="btn btn-primary" onclick="restartTest()">Take Test Again</button>
+                    <button class="btn btn-secondary" onclick="showMethodology()">Learn More About Scoring</button>
                 </div>
             </div>
         </div>
@@ -580,11 +1092,11 @@
            ======================================== */
 
         /**
-         * Generate test questions based on age and test type
+         * Generate test questions based on grade level and test type
          * Following Gordon's framework:
-         * - PMMA (K-3, ages 5-8): Simpler patterns
-         * - IMMA (Grades 1-6, ages 6-12): Medium complexity
-         * - AMMA (Grade 7-Adult, ages 13+): Complex patterns
+         * - PMMA (K-3): Simpler patterns
+         * - IMMA (Grades 1-6): Medium complexity
+         * - AMMA (Grade 7-College): Complex patterns
          */
         
         // Musical note frequencies (using equal temperament)
@@ -710,8 +1222,9 @@
 
         let testState = {
             participantName: '',
-            participantAge: 0,
+            participantGrade: '',
             testLevel: '',
+            testLevelName: '',
             currentPhase: 'tonal', // 'tonal' or 'rhythm'
             currentQuestionIndex: 0,
             tonalQuestions: [],
@@ -722,27 +1235,56 @@
         };
 
         /**
-         * Determine test level based on age
+         * Determine test level based on grade
          */
-        function getTestLevel(age) {
-            if (age >= 5 && age <= 8) {
-                return 'primary'; // PMMA
-            } else if (age >= 9 && age <= 12) {
-                return 'intermediate'; // IMMA
-            } else {
-                return 'advanced'; // AMMA
+        function getTestLevel(grade) {
+            // PMMA: Grades K-3
+            if (['K', '1', '2', '3'].includes(grade)) {
+                return {
+                    level: 'primary',
+                    name: 'PMMA (Primary Measures)',
+                    ageRange: 'Grades K-3'
+                };
+            }
+            // IMMA: Grades 1-6 (overlaps with PMMA for grades 1-3, but typically 4-6)
+            else if (['4', '5', '6'].includes(grade)) {
+                return {
+                    level: 'intermediate',
+                    name: 'IMMA (Intermediate Measures)',
+                    ageRange: 'Grades 1-6'
+                };
+            }
+            // AMMA: Grades 7-College
+            else {
+                return {
+                    level: 'advanced',
+                    name: 'AMMA (Advanced Measures)',
+                    ageRange: 'Grades 7-College'
+                };
             }
         }
+
+        /**
+         * Update grade helper text
+         */
+        document.getElementById('participant-grade')?.addEventListener('change', function() {
+            const grade = this.value;
+            const helper = document.getElementById('grade-helper');
+            if (grade && helper) {
+                const testInfo = getTestLevel(grade);
+                helper.textContent = `Test Level: ${testInfo.name}`;
+            }
+        });
 
         /**
          * Initialize test with participant information
          */
         function startTest() {
             const name = document.getElementById('participant-name').value;
-            const age = parseInt(document.getElementById('participant-age').value);
+            const grade = document.getElementById('participant-grade').value;
             
-            if (!age || age < 5) {
-                alert('Please enter a valid age (5 or older)');
+            if (!grade) {
+                alert('Please select your grade level');
                 return;
             }
             
@@ -750,9 +1292,11 @@
             initAudioContext();
             
             // Set up test state
+            const testInfo = getTestLevel(grade);
             testState.participantName = name;
-            testState.participantAge = age;
-            testState.testLevel = getTestLevel(age);
+            testState.participantGrade = grade;
+            testState.testLevel = testInfo.level;
+            testState.testLevelName = testInfo.name;
             testState.tonalQuestions = generateTonalQuestions(testState.testLevel);
             testState.rhythmQuestions = generateRhythmQuestions(testState.testLevel);
             testState.currentPhase = 'tonal';
@@ -774,6 +1318,9 @@
             const answers = isTonal ? testState.tonalAnswers : testState.rhythmAnswers;
             const totalQuestions = testState.tonalQuestions.length + testState.rhythmQuestions.length;
             const completedQuestions = testState.tonalAnswers.length + testState.rhythmAnswers.length;
+            
+            // Update test level badge
+            document.getElementById('test-level-badge').textContent = testState.testLevelName;
             
             // Update phase title
             document.getElementById('test-phase-title').textContent = 
@@ -898,7 +1445,7 @@
            ======================================== */
 
         /**
-         * Calculate scores and percentiles based on Gordon norms
+         * Calculate scores and percentiles based on Gordon norms (SIMPLIFIED)
          */
         function calculateScores() {
             // Calculate raw scores
@@ -912,7 +1459,7 @@
             
             const overallScore = ((tonalCorrect + rhythmCorrect) / (tonalTotal + rhythmTotal)) * 100;
             
-            // Calculate percentiles based on age and test level
+            // Calculate percentiles based on test level (SIMPLIFIED APPROXIMATION)
             const tonalPercentile = calculatePercentile(tonalScore, 'tonal', testState.testLevel);
             const rhythmPercentile = calculatePercentile(rhythmScore, 'rhythm', testState.testLevel);
             const overallPercentile = Math.round((tonalPercentile + rhythmPercentile) / 2);
@@ -938,14 +1485,14 @@
         }
 
         /**
-         * Calculate percentile based on normed data
-         * Approximated from Gordon's published norms
+         * Calculate percentile based on raw score (SIMPLIFIED APPROXIMATION)
+         * NOTE: This is NOT based on actual Gordon norm tables
+         * Official tests use detailed age-specific norms from large samples
          */
         function calculatePercentile(rawScore, type, level) {
-            // Simplified percentile conversion
-            // In reality, this would use detailed norm tables from Gordon's research
+            // SIMPLIFIED percentile conversion for demonstration purposes only
+            // Official Gordon tests use extensive norm tables
             
-            // Basic conversion: map percentage correct to percentile ranks
             if (rawScore >= 95) return 99;
             if (rawScore >= 90) return 95;
             if (rawScore >= 85) return 90;
@@ -968,27 +1515,27 @@
             if (percentile >= 90) {
                 return {
                     category: 'Superior',
-                    description: 'Your musical aptitude is in the superior range. You demonstrate exceptional ability to perceive and discriminate musical patterns. This suggests strong potential for advanced musical learning and performance.'
+                    description: 'Your pattern recognition abilities in this demonstration are in the superior range. You demonstrated exceptional ability to perceive and discriminate musical patterns. <strong>Remember:</strong> This simplified test cannot accurately measure true musical aptitude. For validated assessment, consult a music educator and use official Gordon tests from GIA Publications.'
                 };
             } else if (percentile >= 75) {
                 return {
                     category: 'Above Average',
-                    description: 'Your musical aptitude is above average. You show strong ability to recognize and differentiate musical patterns. This indicates good potential for musical development and learning.'
+                    description: 'Your pattern recognition abilities in this demonstration are above average. You showed strong ability to recognize and differentiate musical patterns. <strong>Remember:</strong> These results are from a simplified demonstration and should not be used for educational decisions. Official Gordon tests provide validated, normed scores.'
                 };
             } else if (percentile >= 25) {
                 return {
                     category: 'Average',
-                    description: 'Your musical aptitude is in the average range. You demonstrate typical ability to perceive musical patterns. With practice and instruction, you can continue to develop your musical skills.'
+                    description: 'Your pattern recognition abilities in this demonstration are in the average range. You demonstrated typical ability to perceive musical patterns. <strong>Remember:</strong> This is an educational demonstration only. Factors like testing environment, audio quality, and fatigue can significantly affect results. Official tests provide more reliable data.'
                 };
             } else if (percentile >= 10) {
                 return {
                     category: 'Below Average',
-                    description: 'Your musical aptitude is below average. While you may find some aspects of music perception challenging, focused practice and quality instruction can help you develop your musical abilities.'
+                    description: 'Your pattern recognition scores in this demonstration were below average. This could be due to many factors including testing environment, unfamiliarity with the task, or audio quality. <strong>Important:</strong> Do not make any conclusions about musical ability from this simplified demonstration. All students can learn and enjoy music with appropriate instruction.'
                 };
             } else {
                 return {
                     category: 'Low',
-                    description: 'Your current musical aptitude score is low. This may indicate a need for more exposure to music and structured musical learning. Remember that musical skills can be developed with appropriate instruction and practice.'
+                    description: 'Your scores in this demonstration were low. This may reflect unfamiliarity with the testing format, technical issues, or environmental distractions rather than actual musical ability. <strong>Critical reminder:</strong> This simplified test cannot measure true musical aptitude. Musical skills can be developed through quality instruction regardless of test scores. Never use informal tests for exclusionary purposes.'
                 };
             }
         }
@@ -1000,23 +1547,26 @@
             const scores = calculateScores();
             const interpretation = getInterpretation(scores.overall.percentile);
             
+            // Display test level
+            document.getElementById('results-level-badge').textContent = testState.testLevelName;
+            
             // Display overall score
             document.getElementById('total-score').textContent = 
                 Math.round(scores.overall.percentage) + '%';
             document.getElementById('percentile-rank').textContent = 
-                `${scores.overall.percentile}th Percentile`;
+                `Approximate ${scores.overall.percentile}th Percentile`;
             
             // Display tonal scores
             document.getElementById('tonal-score').textContent = 
                 `${scores.tonal.correct}/${scores.tonal.total} correct`;
             document.getElementById('tonal-percentage').textContent = 
-                `${Math.round(scores.tonal.percentage)}% (${scores.tonal.percentile}th percentile)`;
+                `${Math.round(scores.tonal.percentage)}% (≈${scores.tonal.percentile}th percentile)`;
             
             // Display rhythm scores
             document.getElementById('rhythm-score').textContent = 
                 `${scores.rhythm.correct}/${scores.rhythm.total} correct`;
             document.getElementById('rhythm-percentage').textContent = 
-                `${Math.round(scores.rhythm.percentage)}% (${scores.rhythm.percentile}th percentile)`;
+                `${Math.round(scores.rhythm.percentage)}% (≈${scores.rhythm.percentile}th percentile)`;
             
             // Display interpretation
             document.getElementById('interpretation-text').innerHTML = 
@@ -1039,6 +1589,23 @@
                 section.classList.remove('active');
             });
             document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top of content
+            document.querySelector('.content').scrollTop = 0;
+        }
+
+        /**
+         * Show methodology page
+         */
+        function showMethodology() {
+            showSection('methodology-section');
+        }
+
+        /**
+         * Return to intro
+         */
+        function showIntro() {
+            showSection('intro-section');
         }
 
         /**
@@ -1048,8 +1615,9 @@
             // Reset test state
             testState = {
                 participantName: '',
-                participantAge: 0,
+                participantGrade: '',
                 testLevel: '',
+                testLevelName: '',
                 currentPhase: 'tonal',
                 currentQuestionIndex: 0,
                 tonalQuestions: [],
@@ -1061,7 +1629,8 @@
             
             // Clear form
             document.getElementById('participant-name').value = '';
-            document.getElementById('participant-age').value = '';
+            document.getElementById('participant-grade').value = '';
+            document.getElementById('grade-helper').textContent = '';
             
             // Show intro section
             showSection('intro-section');
@@ -1080,16 +1649,21 @@
                     submitAnswer('different');
                 } else if (event.key === ' ') {
                     event.preventDefault();
-                    playCurrentQuestion();
+                    if (!document.getElementById('play-button').disabled) {
+                        playCurrentQuestion();
+                    }
                 }
             }
         });
 
-        // Log test information for debugging
-        console.log('Musical Aptitude Assessment - Based on Gordon\'s Framework');
-        console.log('PMMA: Primary Measures (Ages 5-8)');
-        console.log('IMMA: Intermediate Measures (Ages 9-12)');
-        console.log('AMMA: Advanced Measures (Ages 13+)');
+        // Log information on page load
+        console.log('Musical Aptitude Assessment - Educational Demonstration');
+        console.log('Based on Edwin E. Gordon\'s framework');
+        console.log('PMMA: Grades K-3 | IMMA: Grades 1-6 | AMMA: Grades 7-College');
+        console.log('');
+        console.log('DISCLAIMER: This is a simplified educational demonstration.');
+        console.log('For legitimate assessment, use official tests from GIA Publications.');
+        console.log('Visit: https://giamusicassessment.com/');
     </script>
 </body>
 </html>
