@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Aptitude Assessment</title>
+    <style>
+        /* ==================================
+           RESET & BASE STYLES
+           ================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ==================================
+           CONTAINER & CARD STYLES
+           ================================== */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        /* ==================================
+           SECTION DISPLAY
+           ================================== */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ==================================
+           FORM STYLES
+           ================================== */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* ==================================
+           BUTTON STYLES
+           ================================== */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-same, .btn-different {
+            width: 48%;
+            margin: 1%;
+            padding: 20px;
+            font-size: 1.3em;
+        }
+
+        .btn-same {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn-different {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .btn-same:hover, .btn-different:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ==================================
+           TEST DISPLAY
+           ================================== */
+        .test-info {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .test-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background: #f0f0f0;
+            border-radius: 20px;
+            height: 30px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .question-area {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .audio-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin: 30px 0;
+        }
+
+        .sound-wave {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sound-bar {
+            width: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            animation: wave 0.8s ease-in-out infinite;
+        }
+
+        .sound-bar:nth-child(1) { height: 30px; animation-delay: 0s; }
+        .sound-bar:nth-child(2) { height: 50px; animation-delay: 0.1s; }
+        .sound-bar:nth-child(3) { height: 70px; animation-delay: 0.2s; }
+        .sound-bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
+        .sound-bar:nth-child(5) { height: 30px; animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        .sound-wave.hidden {
+            visibility: hidden;
+        }
+
+        .response-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .instruction {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        /* ==================================
+           RESULTS STYLES
+           ================================== */
+        .results-container {
+            text-align: center;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .score-number {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .percentile {
+            font-size: 1.5em;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .interpretation {
+            background: #fff9c4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .interpretation h3 {
+            color: #f57c00;
+            margin-bottom: 10px;
+        }
+
+        .category-score {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .category-score h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        /* ==================================
+           RESPONSIVE DESIGN
+           ================================== */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .btn-same, .btn-different {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .score-number {
+                font-size: 3em;
+            }
+        }
+
+        /* ==================================
+           UTILITY CLASSES
+           ================================== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Musical Aptitude Assessment 🎵</h1>
+            <p>Based on Gordon's Musical Aptitude Tests</p>
+        </div>
+
+        <div class="content">
+            <!-- ==================================
+                 INTRO SECTION
+                 ================================== -->
+            <div id="intro-section" class="section active">
+                <h2 class="mb-20">Welcome!</h2>
+                <p class="mb-20">
+                    This test measures your natural musical aptitude through tonal and rhythmic pattern recognition. 
+                    You'll listen to pairs of musical patterns and determine if they are the same or different.
+                </p>
+                
+                <div class="form-group">
+                    <label for="participant-name">Name (Optional):</label>
+                    <input type="text" id="participant-name" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="participant-age">Age:</label>
+                    <input type="number" id="participant-age" min="5" max="100" placeholder="Enter your age" required>
+                </div>
+
+                <div class="instruction">
+                    <strong>Instructions:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Find a quiet place with minimal distractions</li>
+                        <li>Use headphones or good speakers</li>
+                        <li>Listen carefully to each pair of patterns</li>
+                        <li>Decide if they sound the same or different</li>
+                        <li>Trust your first instinct</li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-primary" onclick="startTest()">Begin Test</button>
+            </div>
+
+            <!-- ==================================
+                 TEST SECTION
+                 ================================== -->
+            <div id="test-section" class="section">
+                <div class="test-info">
+                    <h2 id="test-phase-title">Tonal Section</h2>
+                    <p id="test-phase-description">Listen to the melodic patterns</p>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar">
+                        <span id="progress-text">0%</span>
+                    </div>
+                </div>
+
+                <div class="question-area">
+                    <div class="question-text" id="question-text">
+                        Click "Play Patterns" to hear the sounds
+                    </div>
+
+                    <div class="audio-visual">
+                        <div class="sound-wave hidden" id="sound-wave">
+                            <div class="sound-bar"></div>
+                            <div class="sound-bar"></div>
+                            <div class="sound-bar"></div>
+                            <div class="sound-bar"></div>
+                            <div class="sound-bar"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mb-20" id="play-button" onclick="playCurrentQuestion()">
+                        🔊 Play Patterns
+                    </button>
+
+                    <div class="response-buttons" id="response-buttons" style="display: none;">
+                        <button class="btn btn-same" onclick="submitAnswer('same')">
+                            ✓ Same
+                        </button>
+                        <button class="btn btn-different" onclick="submitAnswer('different')">
+                            ✗ Different
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================================
+                 RESULTS SECTION
+                 ================================== -->
+            <div id="results-section" class="section">
+                <div class="results-container">
+                    <h2 class="mb-20">Your Results</h2>
+                    
+                    <div class="score-display">
+                        <h3>Overall Score</h3>
+                        <div class="score-number" id="total-score">--</div>
+                        <div class="percentile" id="percentile-rank">--</div>
+                    </div>
+
+                    <div class="category-score">
+                        <h4>🎼 Tonal Score</h4>
+                        <p id="tonal-score" style="font-size: 1.5em; font-weight: bold; color: #667eea;">--</p>
+                        <p id="tonal-percentage">--</p>
+                    </div>
+
+                    <div class="category-score">
+                        <h4>🥁 Rhythm Score</h4>
+                        <p id="rhythm-score" style="font-size: 1.5em; font-weight: bold; color: #764ba2;">--</p>
+                        <p id="rhythm-percentage">--</p>
+                    </div>
+
+                    <div class="interpretation">
+                        <h3>Interpretation</h3>
+                        <p id="interpretation-text">--</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="restartTest()">Take Test Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ========================================
+           AUDIO ENGINE
+           ======================================== */
+        
+        // Initialize Web Audio API context
+        let audioContext;
+        
+        /**
+         * Initialize the audio context (must be called after user interaction)
+         */
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        /**
+         * Play a single tone with specified frequency and duration
+         * @param {number} frequency - Frequency in Hz
+         * @param {number} startTime - When to start (in audio context time)
+         * @param {number} duration - Duration in seconds
+         */
+        function playTone(frequency, startTime, duration) {
+            const ctx = audioContext;
+            
+            // Create oscillator for the tone
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine'; // Pure tone
+            
+            // Envelope for smooth attack and release
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, startTime + 0.05); // Attack
+            gainNode.gain.setValueAtTime(0.3, startTime + duration - 0.05);
+            gainNode.gain.linearRampToValueAtTime(0, startTime + duration); // Release
+            
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        }
+
+        /**
+         * Play a melodic pattern (sequence of tones)
+         * @param {Array} pattern - Array of frequency values
+         * @param {number} startTime - When to start the pattern
+         * @param {number} noteDuration - Duration of each note
+         * @returns {number} - Total duration of the pattern
+         */
+        function playMelodicPattern(pattern, startTime, noteDuration = 0.4) {
+            const ctx = audioContext;
+            let currentTime = startTime;
+            
+            pattern.forEach(frequency => {
+                playTone(frequency, currentTime, noteDuration);
+                currentTime += noteDuration + 0.1; // Add gap between notes
+            });
+            
+            return currentTime - startTime;
+        }
+
+        /**
+         * Play a rhythmic pattern using a single pitch
+         * @param {Array} pattern - Array of durations
+         * @param {number} startTime - When to start the pattern
+         * @param {number} basePitch - Base frequency for rhythm
+         * @returns {number} - Total duration of the pattern
+         */
+        function playRhythmicPattern(pattern, startTime, basePitch = 440) {
+            const ctx = audioContext;
+            let currentTime = startTime;
+            
+            pattern.forEach(duration => {
+                if (duration > 0) {
+                    playTone(basePitch, currentTime, duration);
+                }
+                currentTime += duration + 0.1; // Add gap
+            });
+            
+            return currentTime - startTime;
+        }
+
+        /* ========================================
+           TEST DATA STRUCTURES
+           ======================================== */
+
+        /**
+         * Generate test questions based on age and test type
+         * Following Gordon's framework:
+         * - PMMA (K-3, ages 5-8): Simpler patterns
+         * - IMMA (Grades 1-6, ages 6-12): Medium complexity
+         * - AMMA (Grade 7-Adult, ages 13+): Complex patterns
+         */
+        
+        // Musical note frequencies (using equal temperament)
+        const NOTES = {
+            C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+            G4: 392.00, A4: 440.00, B4: 493.88,
+            C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46,
+            G5: 783.99, A5: 880.00, B5: 987.77
+        };
+
+        /**
+         * Generate tonal questions based on difficulty level
+         */
+        function generateTonalQuestions(level) {
+            const questions = [];
+            
+            if (level === 'primary') {
+                // PMMA level - Simple 3-4 note patterns
+                questions.push(
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.G4], pattern2: [NOTES.C4, NOTES.E4, NOTES.G4], answer: 'same' },
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.G4], pattern2: [NOTES.C4, NOTES.F4, NOTES.G4], answer: 'different' },
+                    { pattern1: [NOTES.G4, NOTES.E4, NOTES.C4], pattern2: [NOTES.G4, NOTES.E4, NOTES.C4], answer: 'same' },
+                    { pattern1: [NOTES.D4, NOTES.F4, NOTES.A4], pattern2: [NOTES.D4, NOTES.E4, NOTES.A4], answer: 'different' },
+                    { pattern1: [NOTES.C4, NOTES.D4, NOTES.E4, NOTES.C4], pattern2: [NOTES.C4, NOTES.D4, NOTES.E4, NOTES.C4], answer: 'same' },
+                    { pattern1: [NOTES.F4, NOTES.E4, NOTES.D4, NOTES.C4], pattern2: [NOTES.F4, NOTES.E4, NOTES.C4, NOTES.D4], answer: 'different' },
+                    { pattern1: [NOTES.E4, NOTES.G4, NOTES.E4], pattern2: [NOTES.E4, NOTES.G4, NOTES.E4], answer: 'same' },
+                    { pattern1: [NOTES.A4, NOTES.G4, NOTES.F4], pattern2: [NOTES.A4, NOTES.F4, NOTES.G4], answer: 'different' },
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.C5], pattern2: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.C5], answer: 'same' },
+                    { pattern1: [NOTES.D4, NOTES.F4, NOTES.A4, NOTES.D5], pattern2: [NOTES.D4, NOTES.F4, NOTES.G4, NOTES.D5], answer: 'different' }
+                );
+            } else if (level === 'intermediate') {
+                // IMMA level - 4-5 note patterns with more variation
+                questions.push(
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.A4, NOTES.G4], pattern2: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.A4, NOTES.G4], answer: 'same' },
+                    { pattern1: [NOTES.C4, NOTES.D4, NOTES.E4, NOTES.F4, NOTES.G4], pattern2: [NOTES.C4, NOTES.D4, NOTES.E4, NOTES.G4, NOTES.F4], answer: 'different' },
+                    { pattern1: [NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4], pattern2: [NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4], answer: 'same' },
+                    { pattern1: [NOTES.A4, NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4], pattern2: [NOTES.A4, NOTES.G4, NOTES.E4, NOTES.F4, NOTES.D4], answer: 'different' },
+                    { pattern1: [NOTES.C5, NOTES.B4, NOTES.A4, NOTES.G4], pattern2: [NOTES.C5, NOTES.B4, NOTES.A4, NOTES.G4], answer: 'same' },
+                    { pattern1: [NOTES.E4, NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4], pattern2: [NOTES.E4, NOTES.G4, NOTES.F4, NOTES.A4, NOTES.B4], answer: 'different' },
+                    { pattern1: [NOTES.D4, NOTES.E4, NOTES.F4, NOTES.E4, NOTES.D4], pattern2: [NOTES.D4, NOTES.E4, NOTES.F4, NOTES.E4, NOTES.D4], answer: 'same' },
+                    { pattern1: [NOTES.G4, NOTES.A4, NOTES.B4, NOTES.C5, NOTES.D5], pattern2: [NOTES.G4, NOTES.A4, NOTES.C5, NOTES.B4, NOTES.D5], answer: 'different' },
+                    { pattern1: [NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4, NOTES.A4], pattern2: [NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4, NOTES.A4], answer: 'same' },
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.D4, NOTES.F4, NOTES.E4], pattern2: [NOTES.C4, NOTES.E4, NOTES.D4, NOTES.E4, NOTES.F4], answer: 'different' },
+                    { pattern1: [NOTES.B4, NOTES.A4, NOTES.G4, NOTES.F4], pattern2: [NOTES.B4, NOTES.A4, NOTES.G4, NOTES.F4], answer: 'same' },
+                    { pattern1: [NOTES.D5, NOTES.C5, NOTES.B4, NOTES.A4, NOTES.G4], pattern2: [NOTES.D5, NOTES.C5, NOTES.A4, NOTES.B4, NOTES.G4], answer: 'different' }
+                );
+            } else {
+                // AMMA level - Complex 5-6 note patterns
+                questions.push(
+                    { pattern1: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.B4, NOTES.A4, NOTES.F4], pattern2: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.B4, NOTES.A4, NOTES.F4], answer: 'same' },
+                    { pattern1: [NOTES.D4, NOTES.F4, NOTES.A4, NOTES.C5, NOTES.B4, NOTES.G4], pattern2: [NOTES.D4, NOTES.F4, NOTES.A4, NOTES.B4, NOTES.C5, NOTES.G4], answer: 'different' },
+                    { pattern1: [NOTES.G4, NOTES.A4, NOTES.B4, NOTES.C5, NOTES.D5], pattern2: [NOTES.G4, NOTES.A4, NOTES.B4, NOTES.C5, NOTES.D5], answer: 'same' },
+                    { pattern1: [NOTES.E4, NOTES.G4, NOTES.B4, NOTES.D5, NOTES.C5, NOTES.A4], pattern2: [NOTES.E4, NOTES.G4, NOTES.B4, NOTES.C5, NOTES.D5, NOTES.A4], answer: 'different' },
+                    { pattern1: [NOTES.F4, NOTES.A4, NOTES.C5, NOTES.E5, NOTES.D5, NOTES.B4], pattern2: [NOTES.F4, NOTES.A4, NOTES.C5, NOTES.E5, NOTES.D5, NOTES.B4], answer: 'same' },
+                    { pattern1: [NOTES.C5, NOTES.B4, NOTES.A4, NOTES.G4, NOTES.F4, NOTES.E4], pattern2: [NOTES.C5, NOTES.B4, NOTES.G4, NOTES.A4, NOTES.F4, NOTES.E4], answer: 'different' },
+                    { pattern1: [NOTES.D4, NOTES.E4, NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4], pattern2: [NOTES.D4, NOTES.E4, NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4], answer: 'same' },
+                    { pattern1: [NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4, NOTES.C4, NOTES.B4], pattern2: [NOTES.G4, NOTES.F4, NOTES.D4, NOTES.E4, NOTES.C4, NOTES.B4], answer: 'different' },
+                    { pattern1: [NOTES.A4, NOTES.B4, NOTES.C5, NOTES.D5, NOTES.E5], pattern2: [NOTES.A4, NOTES.B4, NOTES.C5, NOTES.D5, NOTES.E5], answer: 'same' },
+                    { pattern1: [NOTES.E4, NOTES.F4, NOTES.G4, NOTES.A4, NOTES.B4, NOTES.C5], pattern2: [NOTES.E4, NOTES.F4, NOTES.A4, NOTES.G4, NOTES.B4, NOTES.C5], answer: 'different' },
+                    { pattern1: [NOTES.B4, NOTES.A4, NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4], pattern2: [NOTES.B4, NOTES.A4, NOTES.G4, NOTES.F4, NOTES.E4, NOTES.D4], answer: 'same' },
+                    { pattern1: [NOTES.C5, NOTES.D5, NOTES.E5, NOTES.F5, NOTES.G5], pattern2: [NOTES.C5, NOTES.D5, NOTES.F5, NOTES.E5, NOTES.G5], answer: 'different' }
+                );
+            }
+            
+            return questions;
+        }
+
+        /**
+         * Generate rhythm questions based on difficulty level
+         * Durations are in seconds
+         */
+        function generateRhythmQuestions(level) {
+            const questions = [];
+            
+            if (level === 'primary') {
+                // Simple rhythmic patterns
+                questions.push(
+                    { pattern1: [0.4, 0.4, 0.4], pattern2: [0.4, 0.4, 0.4], answer: 'same' },
+                    { pattern1: [0.4, 0.4, 0.4], pattern2: [0.4, 0.8, 0.4], answer: 'different' },
+                    { pattern1: [0.6, 0.6, 0.4], pattern2: [0.6, 0.6, 0.4], answer: 'same' },
+                    { pattern1: [0.4, 0.6, 0.4], pattern2: [0.6, 0.4, 0.4], answer: 'different' },
+                    { pattern1: [0.4, 0.4, 0.8], pattern2: [0.4, 0.4, 0.8], answer: 'same' },
+                    { pattern1: [0.8, 0.4, 0.4], pattern2: [0.4, 0.8, 0.4], answer: 'different' },
+                    { pattern1: [0.3, 0.3, 0.3, 0.3], pattern2: [0.3, 0.3, 0.3, 0.3], answer: 'same' },
+                    { pattern1: [0.4, 0.2, 0.4, 0.4], pattern2: [0.4, 0.4, 0.2, 0.4], answer: 'different' }
+                );
+            } else if (level === 'intermediate') {
+                // More complex rhythms
+                questions.push(
+                    { pattern1: [0.4, 0.2, 0.2, 0.4, 0.4], pattern2: [0.4, 0.2, 0.2, 0.4, 0.4], answer: 'same' },
+                    { pattern1: [0.4, 0.4, 0.2, 0.2, 0.4], pattern2: [0.4, 0.2, 0.4, 0.2, 0.4], answer: 'different' },
+                    { pattern1: [0.6, 0.3, 0.3, 0.4], pattern2: [0.6, 0.3, 0.3, 0.4], answer: 'same' },
+                    { pattern1: [0.3, 0.3, 0.4, 0.4, 0.3], pattern2: [0.3, 0.4, 0.3, 0.4, 0.3], answer: 'different' },
+                    { pattern1: [0.5, 0.5, 0.4, 0.4], pattern2: [0.5, 0.5, 0.4, 0.4], answer: 'same' },
+                    { pattern1: [0.4, 0.3, 0.3, 0.5, 0.3], pattern2: [0.4, 0.3, 0.5, 0.3, 0.3], answer: 'different' },
+                    { pattern1: [0.2, 0.2, 0.4, 0.2, 0.2, 0.4], pattern2: [0.2, 0.2, 0.4, 0.2, 0.2, 0.4], answer: 'same' },
+                    { pattern1: [0.3, 0.4, 0.3, 0.4, 0.3], pattern2: [0.4, 0.3, 0.3, 0.4, 0.3], answer: 'different' },
+                    { pattern1: [0.4, 0.4, 0.3, 0.3, 0.4], pattern2: [0.4, 0.4, 0.3, 0.3, 0.4], answer: 'same' },
+                    { pattern1: [0.5, 0.2, 0.3, 0.4, 0.4], pattern2: [0.5, 0.3, 0.2, 0.4, 0.4], answer: 'different' }
+                );
+            } else {
+                // Advanced rhythmic patterns
+                questions.push(
+                    { pattern1: [0.3, 0.2, 0.3, 0.4, 0.2, 0.4], pattern2: [0.3, 0.2, 0.3, 0.4, 0.2, 0.4], answer: 'same' },
+                    { pattern1: [0.4, 0.2, 0.3, 0.2, 0.3, 0.4], pattern2: [0.4, 0.3, 0.2, 0.2, 0.3, 0.4], answer: 'different' },
+                    { pattern1: [0.5, 0.3, 0.2, 0.4, 0.3, 0.3], pattern2: [0.5, 0.3, 0.2, 0.4, 0.3, 0.3], answer: 'same' },
+                    { pattern1: [0.2, 0.3, 0.4, 0.3, 0.2, 0.4], pattern2: [0.2, 0.4, 0.3, 0.3, 0.2, 0.4], answer: 'different' },
+                    { pattern1: [0.4, 0.2, 0.2, 0.3, 0.3, 0.4], pattern2: [0.4, 0.2, 0.2, 0.3, 0.3, 0.4], answer: 'same' },
+                    { pattern1: [0.3, 0.3, 0.2, 0.4, 0.3, 0.3], pattern2: [0.3, 0.2, 0.3, 0.4, 0.3, 0.3], answer: 'different' },
+                    { pattern1: [0.5, 0.2, 0.3, 0.3, 0.2, 0.3], pattern2: [0.5, 0.2, 0.3, 0.3, 0.2, 0.3], answer: 'same' },
+                    { pattern1: [0.2, 0.2, 0.3, 0.4, 0.3, 0.4], pattern2: [0.2, 0.3, 0.2, 0.4, 0.3, 0.4], answer: 'different' },
+                    { pattern1: [0.4, 0.3, 0.2, 0.3, 0.4, 0.2], pattern2: [0.4, 0.3, 0.2, 0.3, 0.4, 0.2], answer: 'same' },
+                    { pattern1: [0.3, 0.4, 0.2, 0.3, 0.2, 0.4], pattern2: [0.3, 0.4, 0.3, 0.2, 0.2, 0.4], answer: 'different' }
+                );
+            }
+            
+            return questions;
+        }
+
+        /* ========================================
+           TEST STATE MANAGEMENT
+           ======================================== */
+
+        let testState = {
+            participantName: '',
+            participantAge: 0,
+            testLevel: '',
+            currentPhase: 'tonal', // 'tonal' or 'rhythm'
+            currentQuestionIndex: 0,
+            tonalQuestions: [],
+            rhythmQuestions: [],
+            tonalAnswers: [],
+            rhythmAnswers: [],
+            hasPlayedCurrent: false
+        };
+
+        /**
+         * Determine test level based on age
+         */
+        function getTestLevel(age) {
+            if (age >= 5 && age <= 8) {
+                return 'primary'; // PMMA
+            } else if (age >= 9 && age <= 12) {
+                return 'intermediate'; // IMMA
+            } else {
+                return 'advanced'; // AMMA
+            }
+        }
+
+        /**
+         * Initialize test with participant information
+         */
+        function startTest() {
+            const name = document.getElementById('participant-name').value;
+            const age = parseInt(document.getElementById('participant-age').value);
+            
+            if (!age || age < 5) {
+                alert('Please enter a valid age (5 or older)');
+                return;
+            }
+            
+            // Initialize audio context on user interaction
+            initAudioContext();
+            
+            // Set up test state
+            testState.participantName = name;
+            testState.participantAge = age;
+            testState.testLevel = getTestLevel(age);
+            testState.tonalQuestions = generateTonalQuestions(testState.testLevel);
+            testState.rhythmQuestions = generateRhythmQuestions(testState.testLevel);
+            testState.currentPhase = 'tonal';
+            testState.currentQuestionIndex = 0;
+            testState.tonalAnswers = [];
+            testState.rhythmAnswers = [];
+            
+            // Switch to test section
+            showSection('test-section');
+            updateTestDisplay();
+        }
+
+        /**
+         * Update the test display with current question info
+         */
+        function updateTestDisplay() {
+            const isTonal = testState.currentPhase === 'tonal';
+            const questions = isTonal ? testState.tonalQuestions : testState.rhythmQuestions;
+            const answers = isTonal ? testState.tonalAnswers : testState.rhythmAnswers;
+            const totalQuestions = testState.tonalQuestions.length + testState.rhythmQuestions.length;
+            const completedQuestions = testState.tonalAnswers.length + testState.rhythmAnswers.length;
+            
+            // Update phase title
+            document.getElementById('test-phase-title').textContent = 
+                isTonal ? '🎼 Tonal Section' : '🥁 Rhythm Section';
+            document.getElementById('test-phase-description').textContent = 
+                isTonal ? 'Listen to the melodic patterns' : 'Listen to the rhythmic patterns';
+            
+            // Update progress
+            const progress = (completedQuestions / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = 
+                Math.round(progress) + '%';
+            
+            // Update question text
+            const questionNumber = testState.currentQuestionIndex + 1;
+            const totalInPhase = questions.length;
+            document.getElementById('question-text').textContent = 
+                `Question ${questionNumber} of ${totalInPhase}`;
+            
+            // Reset play state
+            testState.hasPlayedCurrent = false;
+            document.getElementById('response-buttons').style.display = 'none';
+            document.getElementById('play-button').disabled = false;
+        }
+
+        /**
+         * Play the current question's audio patterns
+         */
+        async function playCurrentQuestion() {
+            const playButton = document.getElementById('play-button');
+            const soundWave = document.getElementById('sound-wave');
+            
+            // Disable play button during playback
+            playButton.disabled = true;
+            soundWave.classList.remove('hidden');
+            
+            const isTonal = testState.currentPhase === 'tonal';
+            const questions = isTonal ? testState.tonalQuestions : testState.rhythmQuestions;
+            const currentQuestion = questions[testState.currentQuestionIndex];
+            
+            const ctx = audioContext;
+            const currentTime = ctx.currentTime;
+            
+            let totalDuration;
+            
+            if (isTonal) {
+                // Play first melodic pattern
+                const duration1 = playMelodicPattern(currentQuestion.pattern1, currentTime + 0.5);
+                // Play second melodic pattern after a pause
+                const duration2 = playMelodicPattern(currentQuestion.pattern2, currentTime + duration1 + 1.5);
+                totalDuration = duration1 + duration2 + 2.0;
+            } else {
+                // Play first rhythmic pattern
+                const duration1 = playRhythmicPattern(currentQuestion.pattern1, currentTime + 0.5);
+                // Play second rhythmic pattern after a pause
+                const duration2 = playRhythmicPattern(currentQuestion.pattern2, currentTime + duration1 + 1.5);
+                totalDuration = duration1 + duration2 + 2.0;
+            }
+            
+            // Wait for playback to complete
+            setTimeout(() => {
+                soundWave.classList.add('hidden');
+                document.getElementById('response-buttons').style.display = 'flex';
+                testState.hasPlayedCurrent = true;
+                playButton.disabled = false;
+            }, totalDuration * 1000);
+        }
+
+        /**
+         * Submit an answer for the current question
+         */
+        function submitAnswer(userAnswer) {
+            if (!testState.hasPlayedCurrent) {
+                alert('Please listen to the patterns first!');
+                return;
+            }
+            
+            const isTonal = testState.currentPhase === 'tonal';
+            const questions = isTonal ? testState.tonalQuestions : testState.rhythmQuestions;
+            const currentQuestion = questions[testState.currentQuestionIndex];
+            
+            // Record answer
+            const isCorrect = userAnswer === currentQuestion.answer;
+            if (isTonal) {
+                testState.tonalAnswers.push({
+                    questionIndex: testState.currentQuestionIndex,
+                    userAnswer: userAnswer,
+                    correctAnswer: currentQuestion.answer,
+                    isCorrect: isCorrect
+                });
+            } else {
+                testState.rhythmAnswers.push({
+                    questionIndex: testState.currentQuestionIndex,
+                    userAnswer: userAnswer,
+                    correctAnswer: currentQuestion.answer,
+                    isCorrect: isCorrect
+                });
+            }
+            
+            // Move to next question or phase
+            testState.currentQuestionIndex++;
+            
+            if (testState.currentQuestionIndex >= questions.length) {
+                // Current phase complete
+                if (testState.currentPhase === 'tonal') {
+                    // Move to rhythm phase
+                    testState.currentPhase = 'rhythm';
+                    testState.currentQuestionIndex = 0;
+                    updateTestDisplay();
+                } else {
+                    // Test complete
+                    showResults();
+                }
+            } else {
+                // Next question in current phase
+                updateTestDisplay();
+            }
+        }
+
+        /* ========================================
+           SCORING ENGINE
+           ======================================== */
+
+        /**
+         * Calculate scores and percentiles based on Gordon norms
+         */
+        function calculateScores() {
+            // Calculate raw scores
+            const tonalCorrect = testState.tonalAnswers.filter(a => a.isCorrect).length;
+            const tonalTotal = testState.tonalAnswers.length;
+            const tonalScore = (tonalCorrect / tonalTotal) * 100;
+            
+            const rhythmCorrect = testState.rhythmAnswers.filter(a => a.isCorrect).length;
+            const rhythmTotal = testState.rhythmAnswers.length;
+            const rhythmScore = (rhythmCorrect / rhythmTotal) * 100;
+            
+            const overallScore = ((tonalCorrect + rhythmCorrect) / (tonalTotal + rhythmTotal)) * 100;
+            
+            // Calculate percentiles based on age and test level
+            const tonalPercentile = calculatePercentile(tonalScore, 'tonal', testState.testLevel);
+            const rhythmPercentile = calculatePercentile(rhythmScore, 'rhythm', testState.testLevel);
+            const overallPercentile = Math.round((tonalPercentile + rhythmPercentile) / 2);
+            
+            return {
+                tonal: {
+                    correct: tonalCorrect,
+                    total: tonalTotal,
+                    percentage: tonalScore,
+                    percentile: tonalPercentile
+                },
+                rhythm: {
+                    correct: rhythmCorrect,
+                    total: rhythmTotal,
+                    percentage: rhythmScore,
+                    percentile: rhythmPercentile
+                },
+                overall: {
+                    percentage: overallScore,
+                    percentile: overallPercentile
+                }
+            };
+        }
+
+        /**
+         * Calculate percentile based on normed data
+         * Approximated from Gordon's published norms
+         */
+        function calculatePercentile(rawScore, type, level) {
+            // Simplified percentile conversion
+            // In reality, this would use detailed norm tables from Gordon's research
+            
+            // Basic conversion: map percentage correct to percentile ranks
+            if (rawScore >= 95) return 99;
+            if (rawScore >= 90) return 95;
+            if (rawScore >= 85) return 90;
+            if (rawScore >= 80) return 84;
+            if (rawScore >= 75) return 75;
+            if (rawScore >= 70) return 63;
+            if (rawScore >= 65) return 50;
+            if (rawScore >= 60) return 37;
+            if (rawScore >= 55) return 25;
+            if (rawScore >= 50) return 16;
+            if (rawScore >= 45) return 10;
+            if (rawScore >= 40) return 5;
+            return 1;
+        }
+
+        /**
+         * Get interpretation text based on percentile
+         */
+        function getInterpretation(percentile) {
+            if (percentile >= 90) {
+                return {
+                    category: 'Superior',
+                    description: 'Your musical aptitude is in the superior range. You demonstrate exceptional ability to perceive and discriminate musical patterns. This suggests strong potential for advanced musical learning and performance.'
+                };
+            } else if (percentile >= 75) {
+                return {
+                    category: 'Above Average',
+                    description: 'Your musical aptitude is above average. You show strong ability to recognize and differentiate musical patterns. This indicates good potential for musical development and learning.'
+                };
+            } else if (percentile >= 25) {
+                return {
+                    category: 'Average',
+                    description: 'Your musical aptitude is in the average range. You demonstrate typical ability to perceive musical patterns. With practice and instruction, you can continue to develop your musical skills.'
+                };
+            } else if (percentile >= 10) {
+                return {
+                    category: 'Below Average',
+                    description: 'Your musical aptitude is below average. While you may find some aspects of music perception challenging, focused practice and quality instruction can help you develop your musical abilities.'
+                };
+            } else {
+                return {
+                    category: 'Low',
+                    description: 'Your current musical aptitude score is low. This may indicate a need for more exposure to music and structured musical learning. Remember that musical skills can be developed with appropriate instruction and practice.'
+                };
+            }
+        }
+
+        /**
+         * Display results to the user
+         */
+        function showResults() {
+            const scores = calculateScores();
+            const interpretation = getInterpretation(scores.overall.percentile);
+            
+            // Display overall score
+            document.getElementById('total-score').textContent = 
+                Math.round(scores.overall.percentage) + '%';
+            document.getElementById('percentile-rank').textContent = 
+                `${scores.overall.percentile}th Percentile`;
+            
+            // Display tonal scores
+            document.getElementById('tonal-score').textContent = 
+                `${scores.tonal.correct}/${scores.tonal.total} correct`;
+            document.getElementById('tonal-percentage').textContent = 
+                `${Math.round(scores.tonal.percentage)}% (${scores.tonal.percentile}th percentile)`;
+            
+            // Display rhythm scores
+            document.getElementById('rhythm-score').textContent = 
+                `${scores.rhythm.correct}/${scores.rhythm.total} correct`;
+            document.getElementById('rhythm-percentage').textContent = 
+                `${Math.round(scores.rhythm.percentage)}% (${scores.rhythm.percentile}th percentile)`;
+            
+            // Display interpretation
+            document.getElementById('interpretation-text').innerHTML = 
+                `<strong>${interpretation.category}:</strong> ${interpretation.description}`;
+            
+            // Show results section
+            showSection('results-section');
+        }
+
+        /* ========================================
+           UI UTILITIES
+           ======================================== */
+
+        /**
+         * Show a specific section and hide others
+         */
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        /**
+         * Restart the test
+         */
+        function restartTest() {
+            // Reset test state
+            testState = {
+                participantName: '',
+                participantAge: 0,
+                testLevel: '',
+                currentPhase: 'tonal',
+                currentQuestionIndex: 0,
+                tonalQuestions: [],
+                rhythmQuestions: [],
+                tonalAnswers: [],
+                rhythmAnswers: [],
+                hasPlayedCurrent: false
+            };
+            
+            // Clear form
+            document.getElementById('participant-name').value = '';
+            document.getElementById('participant-age').value = '';
+            
+            // Show intro section
+            showSection('intro-section');
+        }
+
+        /* ========================================
+           INITIALIZATION
+           ======================================== */
+
+        // Add keyboard support for better accessibility
+        document.addEventListener('keydown', function(event) {
+            if (document.getElementById('test-section').classList.contains('active')) {
+                if (event.key === '1' && testState.hasPlayedCurrent) {
+                    submitAnswer('same');
+                } else if (event.key === '2' && testState.hasPlayedCurrent) {
+                    submitAnswer('different');
+                } else if (event.key === ' ') {
+                    event.preventDefault();
+                    playCurrentQuestion();
+                }
+            }
+        });
+
+        // Log test information for debugging
+        console.log('Musical Aptitude Assessment - Based on Gordon\'s Framework');
+        console.log('PMMA: Primary Measures (Ages 5-8)');
+        console.log('IMMA: Intermediate Measures (Ages 9-12)');
+        console.log('AMMA: Advanced Measures (Ages 13+)');
+    </script>
+</body>
+</html>
